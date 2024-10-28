@@ -1,0 +1,31 @@
+﻿@page "/login"
+@layout AuthLayout
+
+<h1 class="h2 font-weight-normal login-title">
+    Login
+</h1>
+
+<EditForm class="form-signin" OnValidSubmit="Login" Model="_loginModel">
+    <DataAnnotationsValidator />
+
+    <label for="inputUsername" class="sr-only">User Name</label>
+    <InputText id="inputUsername" class="form-control" @bind-Value="_loginModel.UserName" autofocus placeholder="Username" />
+    <ValidationMessage For="@(() => _loginModel.UserName)" />
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="_loginModel.Password" />
+    <ValidationMessage For="@(() => _loginModel.Password)" />
+
+    <div class="form-check m-3">
+        <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@_loginModel.RememberMe" />
+        <label class="form-check-label" for="inputRememberMe">Remember Me</label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+    <label class="text-danger">@error</label>
+
+    <NavLink href="register">
+        <h6 class="font-weight-normal text-center">Create account</h6>
+    </NavLink>
+</EditForm>
