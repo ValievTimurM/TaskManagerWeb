@@ -9,7 +9,7 @@ namespace TaskManager.Application.Models.Auth
 {
   public class LoginModel
   {
-    private LoginModel() { }
+    public LoginModel() { }
     [Required]
     public string UserName { get; set; }
     [Required]

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Json;
 using TaskManager.Application.Interfaces.Services.Auth;
 using TaskManager.Application.Models.Auth;
 
-namespace TaskManager.Application.Services.Auth
+namespace TaskManagerWeb.Client.Services.Auth
 {
-  public class AuthService : IAuthService
-    {
+  public class ClientAuthService : IClientAuthService
+  {
     private readonly HttpClient _httpClient;
 
-    public AuthService(HttpClient httpClient)
+    public ClientAuthService(HttpClient httpClient)
     {
       _httpClient = httpClient;
     }
@@ -24,22 +19,24 @@ namespace TaskManager.Application.Services.Auth
       return result;
     }
 
-    public async Task Login(LoginModel loginRequest)
-    {
-      var result = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
-      if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
-      result.EnsureSuccessStatusCode();
-    }
-
     public async Task Logout()
     {
       var result = await _httpClient.PostAsync("api/auth/logout", null);
       result.EnsureSuccessStatusCode();
     }
 
+    public async Task Login(LoginModel loginRequest)
+    {
+      var result = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
+
+      if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+      result.EnsureSuccessStatusCode();
+    }
+
     public async Task Register(RegisterModel registerRequest)
     {
       var result = await _httpClient.PostAsJsonAsync("api/auth/register", registerRequest);
+
       if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
       result.EnsureSuccessStatusCode();
     }

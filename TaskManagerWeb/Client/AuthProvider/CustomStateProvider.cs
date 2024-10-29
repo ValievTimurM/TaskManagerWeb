@@ -7,9 +7,9 @@ namespace TaskManagerWeb.Client.AuthProvider
 {
   public class CustomStateProvider : AuthenticationStateProvider
   {
-    private readonly IAuthService _authService;
+    private readonly IClientAuthService _authService;
     private CurrentUser _currentUser;
-    public CustomStateProvider(IAuthService authService)
+    public CustomStateProvider(IClientAuthService authService)
     {
       _authService = authService;
     }

@@ -1,0 +1,123 @@
+﻿@page "/task"
+@page "/task/{id}"
+
+@if (_model == null && _pageLoading)
+{
+  <h1>Загрузка...</h1>
+}
+else
+{
+  if (_isModelExist)
+  {
+    <div class="container-fluid">
+      <h3>@_header</h3>
+      <hr />
+      <EditForm Model="_model" OnValidSubmit="@Submit">
+        <DataAnnotationsValidator />
+        <div class="row mb-1 mt-1">
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="name">Название</label>
+              <input type="text" class="form-control" id="name" @bind-value="@_model.Name" placeholder="укажите наименование..." />
+              <ValidationMessage For="() => _model.Name"></ValidationMessage>
+            </div>
+          </div>
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="creator">Автор</label>
+              <input type="text" class="form-control" id="creator" disabled="@true" @bind-value="@_model.Creator" />
+            </div>
+          </div>
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="status">Статус</label>
+              <RadzenDropDown Data="@_statuses"
+                              TValue="StatusKind"
+                              class="w-100"
+                              @bind-Value="@_model.Status">
+                <Template Context="item">
+                  @(((StatusKind)item).ToDescription())
+                </Template>
+                <ValueTemplate Context="item">
+                  @(((StatusKind)item).ToDescription())
+                </ValueTemplate>
+              </RadzenDropDown>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-1 mt-1">
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="dateAdd">Дата создания</label>
+              <RadzenDatePicker DateFormat="@_dateTimeFormat"
+                                TValue="DateTime?"
+                                Disabled="true"
+                                class="w-100"
+                                @bind-Value="@_model.DateAdd" />
+            </div>
+          </div>
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="dateStart">Дата начала работы</label>
+              <RadzenDatePicker DateFormat="@_dateTimeFormat"
+                                TValue="DateTime?"
+                                Placeholder="укажите дату..."
+                                class="w-100"
+                                @bind-Value="@_model.DateStart" />
+            </div>
+          </div>
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="planDateEnd">Плановый срок выполнения</label>
+              <RadzenDatePicker DateFormat="@_dateTimeFormat"
+                                TValue="DateTime?"
+                                class="w-100"
+                                Placeholder="укажите дату..."
+                                @bind-Value="@_model.PlanDateEnd" />
+            </div>
+          </div>
+        </div>
+        <div class="row mb-1 mt-1">
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="FactdateEnd">Фактическая дата выполнения</label>
+              <RadzenDatePicker DateFormat="@_dateTimeFormat"
+                                TValue="DateTime?"
+                                class="w-100"
+                                Placeholder="укажите дату..."
+                                @bind-Value="@_model.DateEnd" />
+            </div>
+          </div>
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="factSpendTime">Затраченное время</label>
+              <input type="text" class="form-control" id="factSpendTime" disabled="@true" @bind-value="@_model.DisplayFactSpendTime" />
+            </div>
+          </div>
+          <div class="col-4 col-md-4">
+            <div class="form-group">
+              <label for="desc">Описание</label>
+              <input type="text" class="form-control" id="desc" @bind-value="@_model.Description" placeholder="укажите описание..." />
+              <ValidationMessage For="() => _model.Description"></ValidationMessage>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row pt-2">
+          <div class="col-md-4">
+            <div class="form-group">
+              <button type="submit" class="btn btn-secondary">@(Id is not null ? "Сохранить" : "Добавить")</button>
+              <button type="button" class="btn btn-secondary" @onclick="Back">Отменить</button>
+            </div>
+          </div>
+        </div>
+      </EditForm>
+    </div>
+  }
+  else if (Id != null)
+  {
+    <span>Задача не найдена</span>
+    <br />
+    <button type="button" class="btn btn-secondary" @onclick="Back">Вернуться</button>
+  }
+}

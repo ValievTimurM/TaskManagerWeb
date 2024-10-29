@@ -1,13 +1,17 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Application.Interfaces.Services.Ref;
+using TaskManager.Application.Services.Ref;
 using TaskManager.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var confManager = builder.Configuration;
 // Add services to the container.
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 builder.Services.AddInfrastructureServices(confManager);
+builder.Services.AddTransient<ITaskService, TaskService>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -27,13 +31,10 @@ else
 }
 
 app.UseHttpsRedirection();
-
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 

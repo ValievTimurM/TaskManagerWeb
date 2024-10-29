@@ -1,18 +1,52 @@
 ﻿@page "/"
 
-<AuthorizeView>
-    <Authorized>
-        <h1>Hello @context.User.Identity.Name !!</h1>
-        <p>Welcome to Blazor Learner.</p>
-        <SurveyPrompt Title="How is Blazor working for you?" />
-    </Authorized>
-    <Authorizing>
-        <h1>Loading ...</h1>
-    </Authorizing>
-</AuthorizeView>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<div class="container-fluid">
+    <button class="btn btn-secondary mb-2" type="button" @onclick="@Add">Добавить задачу</button>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    @if (_pageLoading == false)
+    {
+        <RadzenDataGrid Data="@_viewModels"
+                        TItem="TaskViewModel"
+                        @ref="_modelsGrid"
+                        AllowFiltering="true"
+                        AllowPaging="true"
+                        PageSize="100"
+                        FilterMode="FilterMode.Simple"
+                        AllowSorting="true"
+                        class="">
+            <Columns>
+                <RadzenDataGridColumn Width="43px" TItem="TaskViewModel">
+                    <Template Context="item">
+                        <div style="cursor: pointer;" @onclick="@(_=>Update(item))"> <Icon Size="IconSize.x4" Color="IconColor.Dark" Name="IconName.Highlighter" /> </div>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.Name)" Title="Название" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.Status)" Title="Статус">
+                    <Template Context="item">
+                        @item.Status.ToDescription()
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.DateAdd)" Title="Дата создания" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.DateStart)" Title="Дата начала работы" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.PlanDateEnd)" Title="План. дата окончания" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.DateEnd)" Title="Дата окончания" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.DisplayFactSpendTime)" Title="Затраченно время"/>
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.Creator)" Title="Автор">
+                    <Template Context="item">
+                        @if (item.Creator != _currenUser)
+                        {
+                            @item.Creator
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn Width="43px" TItem="TaskViewModel">
+                    <Template Context="item">
+                        <div style="cursor: pointer;" @onclick="@(_=>Delete(item))"> <Icon Size="IconSize.x4" Color="IconColor.Dark" Name="IconName.XCircle" /> </div>
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+</div>

@@ -7,7 +7,7 @@ using TaskManager.Application.Models.Auth;
 
 namespace TaskManager.Application.Interfaces.Services.Auth
 {
-  public interface IAuthService
+  public interface IClientAuthService
   {
     Task Login(LoginModel loginRequest);
     Task Register(RegisterModel registerRequest);

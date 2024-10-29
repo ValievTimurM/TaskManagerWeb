@@ -12,6 +12,10 @@
     <InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@registerModel.UserName" />
     <ValidationMessage For="@(() => registerModel.UserName)" />
 
+    <label for="inputName" class="sr-only">Name</label>
+    <InputText id="inputName" class="form-control" placeholder="Name" autofocus @bind-Value="@registerModel.Name" />
+    <ValidationMessage For="@(() => registerModel.UserName)" />
+
     <label for="inputPassword" class="sr-only">Password</label>
     <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerModel.Password" />
     <ValidationMessage For="@(() => registerModel.Password)" />

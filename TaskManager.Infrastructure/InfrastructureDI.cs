@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Application.Interfaces.Repositories;
 using TaskManager.Infrastructure.Auth;
 using TaskManager.Infrastructure.DB;
+using TaskManager.Infrastructure.Repositories;
 
 namespace TaskManager.Infrastructure
 {
@@ -27,6 +29,9 @@ namespace TaskManager.Infrastructure
           return Task.CompletedTask;
         };
       });
+
+      services.AddTransient<IRefRepositoryQuery, RefRepositoryQuery>();
+      services.AddTransient<IRefRepositoryCommand, RefRepositoryCommand>();
 
       return services;
     }

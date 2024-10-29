@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace TaskManager.Infrastructure.Auth
 {
-    public class AppUser : IdentityUser
-    {
-    }
+  public class AppUser : IdentityUser
+  {
+    public string Name { get; set; }
+  }
 }
