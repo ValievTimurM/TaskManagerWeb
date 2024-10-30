@@ -24,8 +24,7 @@ namespace TaskManager.Infrastructure.DB
               .HasOne(p=>p.Task)
               .WithMany(p=>p.Comments)
               .HasForeignKey(p=>p.TaskId)
-              .OnDelete(DeleteBehavior.Cascade)
-              .IsRequired();
+              .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

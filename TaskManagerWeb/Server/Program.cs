@@ -11,6 +11,7 @@ var confManager = builder.Configuration;
 
 builder.Services.AddInfrastructureServices(confManager);
 builder.Services.AddTransient<ITaskService, TaskService>();
+builder.Services.AddTransient<ICommentService, CommentService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -12,5 +12,6 @@ namespace TaskManager.Application.Interfaces.Repositories
     Task AddTask(TaskModel item);
     Task UpdateTask(TaskModel item);
     Task DeleteTask(Guid id);
+    Task AddComment(Comment item);
   }
 }

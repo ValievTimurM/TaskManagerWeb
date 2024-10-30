@@ -27,7 +27,7 @@ namespace TaskManagerWeb.Client.AuthProvider
       }
       catch (HttpRequestException ex)
       {
-        Console.WriteLine("Request failed:" + ex.ToString());
+        Console.WriteLine("Ошибка:" + ex.ToString());
       }
 
       return new AuthenticationState(new ClaimsPrincipal(identity));

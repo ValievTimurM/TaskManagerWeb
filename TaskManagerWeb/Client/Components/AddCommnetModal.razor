@@ -1,0 +1,19 @@
+﻿@if (_pageLoading == false && _commentViewModel is not null)
+{
+  <EditForm Model="@_commentViewModel" OnValidSubmit="@CreateComment">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+      <label for="com">Комментарий</label>
+      <input type="text" class="form-control" id="com" @bind-value="@_commentViewModel.Text" placeholder="укажите комментарий..." />
+      <ValidationMessage For="() => _commentViewModel.Text"></ValidationMessage>
+    </div>
+
+    <div class="form-group mt-2">
+      <button type="submit" class="btn btn-secondary">Добавить</button>
+      <button type="button" class="btn btn-secondary" @onclick="Close">Отменить</button>
+    </div>
+  </EditForm>
+}
+
+

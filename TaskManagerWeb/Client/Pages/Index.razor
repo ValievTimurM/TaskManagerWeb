@@ -22,16 +22,21 @@
                         <div style="cursor: pointer;" @onclick="@(_=>Update(item))"> <Icon Size="IconSize.x4" Color="IconColor.Dark" Name="IconName.Highlighter" /> </div>
                     </Template>
                 </RadzenDataGridColumn>
+                <RadzenDataGridColumn Width="43px" TItem="TaskViewModel">
+                    <Template Context="item">
+                        <div style="cursor: pointer;" @onclick="@(_=>AddComment(item))"> <Icon Size="IconSize.x4" Color="IconColor.Dark" Name="IconName.ChatDots" /> </div>
+                    </Template>
+                </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.Name)" Title="Название" />
                 <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.Status)" Title="Статус">
                     <Template Context="item">
                         @item.Status.ToDescription()
                     </Template>
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.DateAdd)" Title="Дата создания" />
-                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.DateStart)" Title="Дата начала работы" />
-                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.PlanDateEnd)" Title="План. дата окончания" />
-                <RadzenDataGridColumn TItem="TaskViewModel" Filterable="false" Property="@nameof(TaskViewModel.DateEnd)" Title="Дата окончания" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.DateAdd)" Title="Дата создания" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.DateStart)" Title="Дата начала работы" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.PlanDateEnd)" Title="План. дата окончания" />
+                <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.DateEnd)" Title="Дата окончания" />
                 <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.DisplayFactSpendTime)" Title="Затраченно время"/>
                 <RadzenDataGridColumn TItem="TaskViewModel" Property="@nameof(TaskViewModel.Creator)" Title="Автор">
                     <Template Context="item">

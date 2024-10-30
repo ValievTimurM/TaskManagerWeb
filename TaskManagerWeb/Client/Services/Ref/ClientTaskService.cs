@@ -18,6 +18,7 @@ namespace TaskManagerWeb.Client.Services.Ref
       _httpClient = httpClient;
     }
 
+    #region Task
     public async Task CreateTask(TaskViewModel item)
     {
 
@@ -53,5 +54,15 @@ namespace TaskManagerWeb.Client.Services.Ref
       
       return response;
     }
+    #endregion
+
+    #region Comment
+    public async Task CreateComment(CommentViewModel item)
+    {
+      var result = await _httpClient.PostAsJsonAsync("api/comment/add", item);
+
+      result.EnsureSuccessStatusCode();
+    }
+    #endregion
   }
 }

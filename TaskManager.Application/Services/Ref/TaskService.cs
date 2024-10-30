@@ -4,11 +4,13 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Application.Helpers.Extension;
 using TaskManager.Application.Interfaces.Repositories;
 using TaskManager.Application.Interfaces.Services.Ref;
 using TaskManager.Application.Mapping;
 using TaskManager.Application.Models.Common;
 using TaskManager.Application.Models.ViewModels;
+using TaskManager.Core.Extension;
 using TaskManager.Core.Models;
 
 namespace TaskManager.Application.Services.Ref
@@ -52,7 +54,8 @@ namespace TaskManager.Application.Services.Ref
 			try
 			{
 				var entity = item.ToAddModel();
-				entity.Comments = item.Comments.Select(p => p.ToModel()).ToList();
+				entity.Comments.SyncValues(item.Comments.Select(p => p.ToModel()).ToList());
+
 				await _repositoryCommand.AddTask(entity);
 				return ServiceResult.Ok();
 			}
@@ -68,8 +71,12 @@ namespace TaskManager.Application.Services.Ref
 			try
 			{
 				var entity = item.ToUpdateModel();
-				entity.Comments = item.Comments.Select(p => p.ToModel()).ToList();
-				await _repositoryCommand.UpdateTask(entity);
+
+				//entity.Comments.SyncValues(item.Comments.Select(p => p.ToModel()).ToList());
+
+        entity.Comments = item.Comments.Select(p => p.ToModel()).ToList();
+
+        await _repositoryCommand.UpdateTask(entity);
 				return ServiceResult.Ok();
 			}
 			catch (Exception e)

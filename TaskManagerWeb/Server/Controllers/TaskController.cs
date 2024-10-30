@@ -14,17 +14,19 @@ namespace TaskManagerWeb.Server.Controllers
   [Authorize]
   public class TaskController : ControllerBase
   {
-    private readonly ITaskService _taskService;
-    public TaskController(ITaskService taskService)
+    private readonly ITaskService _tasksService;
+    private readonly ICommentService _comService;
+    public TaskController(ITaskService taskService, ICommentService comService)
     {
-      _taskService = taskService;
+      _tasksService = taskService;
+      _comService = comService;
     }
 
     [HttpGet]
     [Route("get")]
     public async Task<IActionResult> Get()
     {
-      IList<TaskViewModel> tasks = await _taskService.Get();
+      IList<TaskViewModel> tasks = await _tasksService.Get();
       return Ok(tasks);
     }
 
@@ -33,7 +35,7 @@ namespace TaskManagerWeb.Server.Controllers
     [Route("getby/{id}")]
     public async Task<IActionResult> Getby(Guid id)
     {
-      var task = await _taskService.GetBy(id);
+      var task = await _tasksService.GetBy(id);
       return Ok(task);
     }
 
@@ -41,7 +43,7 @@ namespace TaskManagerWeb.Server.Controllers
     [Route("add")]
     public async Task<IActionResult> Add(TaskViewModel modelToAdd)
     {
-      var result = await _taskService.Add(modelToAdd);
+      var result = await _tasksService.Add(modelToAdd);
 
       if (result.Success)
       {
@@ -57,7 +59,7 @@ namespace TaskManagerWeb.Server.Controllers
     [Route("Update")]
     public async Task<IActionResult> Update(TaskViewModel modelToUpdate)
     {
-      var result = await _taskService.Update(modelToUpdate);
+      var result = await _tasksService.Update(modelToUpdate);
       if (result.Success)
       {
         return Ok();
@@ -72,7 +74,7 @@ namespace TaskManagerWeb.Server.Controllers
     [Route("Delete")]
     public async Task<IActionResult> Delete(TaskViewModel modelToDelete)
     {
-      var result = await _taskService.Delete(modelToDelete.Id);
+      var result = await _tasksService.Delete(modelToDelete.Id);
 
       if (result.Success)
       {

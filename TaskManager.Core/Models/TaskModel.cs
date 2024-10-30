@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using TaskManager.Core.Extension;
 using TaskManager.Core.Models.Common;
 using TaskManager.Core.Models.Enum;
 
@@ -15,7 +16,7 @@ namespace TaskManager.Core.Models
     public string Name { get; set; }
     public string Description { get; set; }
     public string Creator { get; set; }
-    public IList<Comment> Comments { get; set; }
+    public IList<Comment> Comments { get; set; } = new List<Comment>();
     public StatusKind Status { get; set; } = StatusKind.Created;
     public DateTime? DateStart { get; set; }
     public DateTime? PlanDateEnd { get; set; }
@@ -80,9 +81,8 @@ namespace TaskManager.Core.Models
       DateStart = item.DateStart;
       PlanDateEnd = item.PlanDateEnd;
       FactSpendTime = item.FactSpendTime;
-      Comments = item.Comments;
       DateEnd = item.DateEnd;
-    }
+		}
 
     
   }

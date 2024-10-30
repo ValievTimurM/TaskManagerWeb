@@ -6,6 +6,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Application.Interfaces.Repositories;
+using TaskManager.Application.Models.ViewModels;
 using TaskManager.Core.Models;
 using TaskManager.Infrastructure.DB;
 
@@ -26,7 +27,7 @@ namespace TaskManager.Infrastructure.Repositories
 
     public async Task UpdateTask(TaskModel item)
     {
-      var itemOld = await _dbContext.Tasks.FirstOrDefaultAsync(x=>x.Id == item.Id);
+      var itemOld = await _dbContext.Tasks.Include(p=>p.Comments).FirstOrDefaultAsync(x=>x.Id == item.Id);
       if (itemOld != null)
       {
         itemOld.SyncProperties(item);
@@ -44,6 +45,14 @@ namespace TaskManager.Infrastructure.Repositories
       }
     }
 
+    #endregion
+
+    #region Comments
+    public async Task AddComment(Comment item)
+    {
+      _dbContext.Comments.Add(item);
+      await _dbContext.SaveChangesAsync();
+    }
     #endregion
   }
 }

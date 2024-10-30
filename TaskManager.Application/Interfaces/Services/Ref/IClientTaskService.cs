@@ -14,5 +14,6 @@ namespace TaskManager.Application.Interfaces.Services.Ref
     Task DeleteTask(TaskViewModel item);
     Task<IList<TaskViewModel>> GetTasks();
     Task<TaskViewModel> GetTaskBy(Guid id);
+    Task CreateComment(CommentViewModel item);
   }
 }

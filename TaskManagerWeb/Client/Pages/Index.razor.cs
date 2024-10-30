@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorBootstrap;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using Radzen;
@@ -7,6 +8,7 @@ using TaskManager.Application.Interfaces.Services.Auth;
 using TaskManager.Application.Interfaces.Services.Ref;
 using TaskManager.Application.Models.ViewModels;
 using TaskManagerWeb.Client.AuthProvider;
+using TaskManagerWeb.Client.Components;
 
 namespace TaskManagerWeb.Client.Pages
 {
@@ -57,8 +59,9 @@ namespace TaskManagerWeb.Client.Pages
 
 		private async Task Load()
 		{
-			_viewModels = await _taskService.GetTasks();
-			_currenUser = (await _authenticationState).User?.Identity?.Name;
+      _currenUser = (await _authenticationState).User?.Identity?.Name ?? string.Empty;
+			if(_currenUser != string.Empty)
+				_viewModels = await _taskService.GetTasks();
 		}
 
 		private async Task Add()
@@ -103,6 +106,20 @@ namespace TaskManagerWeb.Client.Pages
 																							 "Уведомление системы",
 																							 new ConfirmOptions() { OkButtonText = "Да", CancelButtonText = "Нет" });
 			return result;
+		}
+
+		private async Task AddComment(TaskViewModel item)
+		{
+			await ShowAddCommentDialog(item.Id);
+			StateHasChanged();
+		}
+
+		private async Task ShowAddCommentDialog(Guid taskId)
+		{
+			var result = await _radzenDialog.OpenAsync<AddCommnetModal>("Дабавление комментария",
+																							 new Dictionary<string, object>() { { "TaskId", taskId } , { "FirstAdd", false } },
+																							 new DialogOptions() { Width = "500px", Height = "auto", Resizable = false, Draggable = false });
+			
 		}
 
 		private async Task Reload()

@@ -21,6 +21,6 @@ namespace TaskManager.Application.Models.Common
 
     public static ServiceResult Ok() => new ServiceResult { Success = true };
     public static ServiceResult Fail(Exception ex) => new ServiceResult { Success = false, Exception = ex };
-    public static ServiceResult Fail(string message) => new ServiceResult { Success = true, Message = message };
+    public static ServiceResult Fail(string message) => new ServiceResult { Success = false, Message = message };
   }
 }

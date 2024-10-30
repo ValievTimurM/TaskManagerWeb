@@ -103,6 +103,26 @@ else
           </div>
         </div>
         <hr />
+        <h5 class="mb-4 mt-2">Комментарии</h5>
+        <button class="btn btn-secondary mb-2" type="button" @onclick="@AddComments">Добавить комментарий</button> 
+
+        <RadzenDataGrid Data="@_model.Comments"
+                        TItem="CommentViewModel"
+                        @ref="_modelsGrid"
+                        AllowFiltering="true"
+                        AllowPaging="true"
+                        PageSize="100"
+                        FilterMode="FilterMode.Simple"
+                        AllowSorting="true"
+                        class="">
+          <Columns>
+            <RadzenDataGridColumn TItem="CommentViewModel" Filterable="false" Property="@nameof(CommentViewModel.Text)" Title="Коментарий" />
+            <RadzenDataGridColumn TItem="CommentViewModel" Filterable="false" Property="@nameof(CommentViewModel.Creator)" Title="Автор" />
+            <RadzenDataGridColumn TItem="CommentViewModel" Filterable="false" Property="@nameof(CommentViewModel.DateAdd)" Title="Дата добавления" />
+          </Columns>
+        </RadzenDataGrid>
+        
+
         <div class="row pt-2">
           <div class="col-md-4">
             <div class="form-group">
